@@ -1,28 +1,16 @@
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.GraphicsBuffer;
 
 public class BirdController : MonoBehaviour
 {
-
     [SerializeField] float _moveSpeed;
     [SerializeField] float _jumpForce;
+
     private Rigidbody _rigidbody;
     private bool _isAscendPressed;
     private bool _isSteerPressed;
     private float _direction;
-    
-    void OnAscend()
-    {
-        _isAscendPressed = true;
-    }
-
-    void OnSteer(InputValue value)
-    {
-        _direction = value.Get<float>();
-        _isSteerPressed = true;
-    }
 
     void Awake()
     {
@@ -40,25 +28,68 @@ public class BirdController : MonoBehaviour
     {
         Vector3 newVelocity = Vector3.zero;
 
+        newVelocity = SteerPlayer(newVelocity);
+
+        newVelocity = AscendPlayer(newVelocity);
+
+        ApplyForce(newVelocity);
+    }
+
+    private void OnAscend()
+    {
+        _isAscendPressed = true;
+    }
+
+    private void OnSteer(InputValue value)
+    {
+        _direction = value.Get<float>();
+        _isSteerPressed = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("GAME OVER");
+    }
+
+    private Vector3 SteerPlayer(Vector3 newVelocity)
+    {
         if (_isSteerPressed)
         {
-            newVelocity = new Vector3(_moveSpeed * _direction, 0, 0);
+            newVelocity = new Vector3(_moveSpeed * _direction, _rigidbody.linearVelocity.y, 0);
             _isSteerPressed = false;
         }
 
+        return newVelocity;
+    }
+
+    private Vector3 AscendPlayer(Vector3 newVelocity)
+    {
         if (_isAscendPressed)
         {
             newVelocity = new Vector3(_rigidbody.linearVelocity.x, _jumpForce, 0);
             _isAscendPressed = false;
         }
 
+        return newVelocity;
+    }
+
+    private void ApplyForce(Vector3 newVelocity)
+    {
         if (newVelocity != Vector3.zero)
         {
-            _rigidbody.linearVelocity = new Vector3(0, _rigidbody.linearVelocity.y, 0);
+            // Gravity is disabled until the player presses a key.
+            if (_rigidbody.isKinematic)
+            {
+                _rigidbody.isKinematic = false;
+            }
+
+            // reset old velocity
+            _rigidbody.linearVelocity = Vector3.zero;
+
+            // apply new force
             _rigidbody.AddForce(newVelocity, ForceMode.Impulse);
         }
     }
-
 
     // bron: https://stackoverflow.com/questions/42800645/how-to-completely-prevent-the-player-from-going-offscreen-in-unity
     private void ClampPlayerMovement()
