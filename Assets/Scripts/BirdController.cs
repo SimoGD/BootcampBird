@@ -1,5 +1,5 @@
-using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class BirdController : MonoBehaviour
@@ -11,6 +11,9 @@ public class BirdController : MonoBehaviour
     private bool _isAscendPressed;
     private bool _isSteerPressed;
     private float _direction;
+
+    public UnityEvent CollisionEvent;
+    public UnityEvent IncreaseScoreEvent;
 
     void Awake()
     {
@@ -49,6 +52,12 @@ public class BirdController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("GAME OVER");
+        CollisionEvent.Invoke();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IncreaseScoreEvent.Invoke();
     }
 
     private Vector3 SteerPlayer(Vector3 newVelocity)
