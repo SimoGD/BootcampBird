@@ -1,8 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label text="0" name="scoreLabel" style="align-self: center; align-items: center; align-content: center; justify-content: center; -unity-text-align: middle-center; font-size: 44px;"/>
-    <ui:Label text="Press any key to start" name="startLabel" style="-unity-text-align: upper-center; font-size: 34px;"/>
+    <ui:Label text="0" name="scoreLabel" style="align-self: center; align-items: center; align-content: center; justify-content: center; -unity-text-align: middle-center; font-size: 44px; color: rgb(255, 255, 255);"/>
+    <ui:Label text="Press any key to start" name="startLabel" style="-unity-text-align: upper-center; font-size: 34px; color: rgb(255, 255, 255);"/>
     <ui:VisualElement name="gameOverVisualElement" style="flex-grow: 1; right: auto; left: auto; justify-content: space-around;">
-        <ui:Label text="Game Over!&#10;&#10;Your final score is: " name="finalScoreLabel" style="align-self: center; font-size: 44px; -unity-text-align: upper-center;"/>
+        <ui:Label text="Game Over!&#10;&#10;Your final score is: " name="finalScoreLabel" style="align-self: center; font-size: 44px; -unity-text-align: upper-center; color: rgb(255, 255, 255);"/>
         <ui:Button text="Restart" name="restartButton" style="width: 10%; align-self: center; justify-content: space-between;"/>
     </ui:VisualElement>
 </ui:UXML>

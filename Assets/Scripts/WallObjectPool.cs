@@ -1,7 +1,7 @@
 // bron: https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Pool.ObjectPool_1.html?utm_source=chatgpt.com
 using UnityEngine;
 using UnityEngine.Pool;
-
+using System.Collections.Generic;
 public class WallObjectPool : MonoBehaviour
 {
     public GameObject[] WallPrefabs;
@@ -53,11 +53,44 @@ public class WallObjectPool : MonoBehaviour
     private GameObject SpawnWall()
     {
 
-        GameObject pooledObject = pool.Get();
+        GameObject pooledObject = GetRandomPooledObject();
 
         StartCoroutine(ReturnAfter(pooledObject, despawnTimer));
         
         return pooledObject;
+    }
+
+    private GameObject GetRandomPooledObject()
+    {
+        List<GameObject> availableObjects = new List<GameObject>();
+
+        // Collect all inactive objects from the pool.
+        while (pool.CountInactive > 0)
+        {
+            availableObjects.Add(pool.Get());
+        }
+
+        // If there are no inactive objects available, create a new one
+        if (availableObjects.Count == 0)
+        {
+            return pool.Get();
+        }
+
+        int randomIndex = Random.Range(0, availableObjects.Count);
+
+        GameObject selectedObject = availableObjects[randomIndex];
+
+        // Return all other objects to the pool.
+        for (int i = 0; i < availableObjects.Count; i++)
+        {
+            if (i != randomIndex)
+            {
+                pool.Release(availableObjects[i]);
+            }
+        }
+
+        // Send one random wall back.
+        return selectedObject;
     }
 
     // Creates a new pooled GameObject the first time (and whenever the pool needs more).

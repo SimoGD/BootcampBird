@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0.0f;
     }
+
 
     private void StartGame()
     {

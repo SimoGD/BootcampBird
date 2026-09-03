@@ -6,12 +6,13 @@ public class BirdController : MonoBehaviour
 {
     [SerializeField] float _moveSpeed;
     [SerializeField] float _jumpForce;
-
+    [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] audioClips;
     private Rigidbody _rigidbody;
     private bool _isAscendPressed;
     private bool _isSteerPressed;
     private float _direction;
-
     public UnityEvent CollisionEvent;
     public UnityEvent IncreaseScoreEvent;
 
@@ -40,6 +41,8 @@ public class BirdController : MonoBehaviour
 
     private void OnAscend()
     {
+        if (Time.timeScale != 0)
+            PlayAudio("flap");
         _isAscendPressed = true;
     }
 
@@ -51,15 +54,21 @@ public class BirdController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("GAME OVER");
+        PlayAudio("collision");
         CollisionEvent.Invoke();
+        PlayDeathAnimation();
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        PlayAudio("point");
         IncreaseScoreEvent.Invoke();
     }
 
+    private void PlayDeathAnimation()
+    {
+        animator.SetTrigger("Death");
+    }
     private Vector3 SteerPlayer(Vector3 newVelocity)
     {
         if (_isSteerPressed)
@@ -118,8 +127,29 @@ public class BirdController : MonoBehaviour
         }
 
         position.x = Mathf.Clamp(position.x, leftBorder, rightBorder);
-        position.y = Mathf.Clamp(position.y, -4, ceiling);
+        position.y = Mathf.Clamp(position.y, -4, ceiling-2);
 
         transform.position = position;
+    }
+
+    public void DeathAnimationFinished()
+    {
+        animator.enabled = false;
+    }
+
+    private void PlayAudio(string fileName)
+    {
+        foreach (AudioClip audioClip in audioClips)
+        {
+            if (audioClip.name == fileName)
+            {
+                if (fileName == "collision")
+                    audioSource.volume = 0.3f;
+                else
+                    audioSource.volume = 0.6f;
+
+                audioSource.PlayOneShot(audioClip);
+            }
+        }
     }
 }
