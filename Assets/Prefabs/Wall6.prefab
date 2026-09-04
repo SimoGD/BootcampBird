@@ -60,6 +60,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.08
       objectReference: {fileID: 0}
+    - target: {fileID: 7708708942475081548, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708708942475081548, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.6374595
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708708942475081548, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.28150436
+      objectReference: {fileID: 0}
     - target: {fileID: 8226947257580219085, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.27199027
@@ -91,6 +103,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8226947257580582637, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
+    - {fileID: 8202983692046852573, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 589632018764767297, guid: cce6ecab32dfe8740b5126bbb9a11b41, type: 3}
       insertIndex: 8
@@ -112,7 +125,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: f48e21b468431224285ea1023b046d10, type: 3}
       propertyPath: m_Name
-      value: SM_Bld_Apartment_Door_02 (2)
+      value: Obstacle1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f48e21b468431224285ea1023b046d10, type: 3}
       propertyPath: m_TagString

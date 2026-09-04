@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class WallObjectPool : MonoBehaviour
 {
     public GameObject[] WallPrefabs;
+    private int _colorIndex = 0;
     private ObjectPool<GameObject> pool;
 
     [Tooltip("How often a wall spawns in.")]
@@ -102,11 +103,29 @@ public class WallObjectPool : MonoBehaviour
 
         // Change its color to something random.
         Renderer[] renderers = pooledObject.GetComponentsInChildren<Renderer>();
-        Color randomColor = Random.ColorHSV();
 
+        // Pick a random bright color.
+        Color[] colors =
+        {
+            Color.red,
+            Color.yellow,
+            Color.green,
+            Color.blue,
+            Color.magenta,
+        };
+
+        Color color = colors[_colorIndex % colors.Length];
+
+        // Color each obstical part of the prefab with the randomly chosen color.
         foreach (Renderer renderer in renderers)
         {
-            renderer.material.color = randomColor;
+            string objectName = renderer.gameObject.name;
+
+            if(objectName.StartsWith("Obstacle"))
+            {
+                renderer.material.color = color;
+                _colorIndex++;
+            }
         }
        
         // Set the travelling speed of the current wall.

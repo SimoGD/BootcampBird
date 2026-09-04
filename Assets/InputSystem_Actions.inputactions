@@ -18,12 +18,12 @@
                 },
                 {
                     "name": "Steer",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c7268052-e16b-4aca-99b4-e5cc4863aeee",
-                    "expectedControlType": "",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false,
+                    "initialStateCheck": true,
                     "priority": 0
                 }
             ],
